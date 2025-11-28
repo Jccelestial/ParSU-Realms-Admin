@@ -1,0 +1,6 @@
+Trigger file for CI/CD
+
+This file is intentionally small. Commit and push this file to the `main` branch to trigger
+the `.github/workflows/vercel-deploy.yml` workflow which will run a production deploy to Vercel.
+
+Created: 2025-11-28

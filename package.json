@@ -1,0 +1,15 @@
+{
+  "name": "parsu-realms-admin-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static admin dashboard for ParSU Realms",
+  "scripts": {
+    "deploy": "vercel --prod",
+    "preview": "vercel",
+    "start": "npx serve ."
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "license": "MIT"
+}
