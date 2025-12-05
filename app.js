@@ -1137,6 +1137,60 @@ function initThemeToggle() {
     });
 }
 
+// Parallax scroll effect for mobile cards
+function initParallaxScroll() {
+    // Only apply on mobile devices
+    if (window.innerWidth <= 768) {
+        const mainContent = document.querySelector('.main-content');
+        const cards = document.querySelectorAll('.stat-card, .chart-card, .quest-card, .analytics-card');
+        
+        if (!mainContent || cards.length === 0) return;
+        
+        let ticking = false;
+        
+        function updateParallax() {
+            const scrollTop = mainContent.scrollTop;
+            const windowHeight = window.innerHeight;
+            
+            cards.forEach((card) => {
+                const rect = card.getBoundingClientRect();
+                const cardTop = rect.top;
+                const cardHeight = rect.height;
+                
+                // Calculate if card is in viewport
+                if (cardTop < windowHeight && cardTop + cardHeight > 0) {
+                    // Calculate parallax offset (subtle movement)
+                    const scrollProgress = (windowHeight - cardTop) / (windowHeight + cardHeight);
+                    const translateY = (scrollProgress - 0.5) * 20; // Max 10px movement up or down
+                    const scale = 0.95 + (scrollProgress * 0.05); // Scale from 0.95 to 1.0
+                    
+                    card.style.transform = `translateY(${translateY}px) scale(${Math.min(scale, 1)})`;
+                    card.style.opacity = Math.min(scrollProgress + 0.3, 1);
+                } else {
+                    // Reset when out of view
+                    card.style.transform = 'translateY(0) scale(0.95)';
+                    card.style.opacity = '0.3';
+                }
+            });
+            
+            ticking = false;
+        }
+        
+        mainContent.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateParallax();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+        
+        // Initial update
+        updateParallax();
+    }
+}
+
 // Auto logout when window/tab is closed
 window.addEventListener('beforeunload', () => {
     // Clear session data on exit
@@ -1153,4 +1207,5 @@ window.addEventListener('beforeunload', () => {
 if (checkAuth()) {
     initDashboard();
     initThemeToggle();
+    initParallaxScroll();
 }

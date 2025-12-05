@@ -1206,6 +1206,9 @@ body {
     
     .stat-card {
         padding: 14px;
+        transform: translateZ(0);
+        will-change: transform;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .stat-card h3 {
@@ -1220,6 +1223,9 @@ body {
         padding: 16px;
         max-height: none;
         min-height: 280px;
+        transform: translateZ(0);
+        will-change: transform;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .chart-card h3 {
@@ -1238,6 +1244,9 @@ body {
     
     .quest-card {
         padding: 14px;
+        transform: translateZ(0);
+        will-change: transform;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .quest-card h3 {
