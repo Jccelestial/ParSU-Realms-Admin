@@ -10,12 +10,30 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(180deg, rgba(16,48,100,0.92) 0%, rgba(15,23,42,0.96) 100%), url('../Logo Parsu Realms.png') no-repeat center center fixed;
+            background: linear-gradient(180deg, rgba(16,48,100,0.85) 0%, rgba(15,23,42,0.90) 100%), url('/image/backgraound.png') no-repeat center center fixed;
             background-size: cover;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(16,48,100,0.4) 0%, rgba(15,23,42,0.6) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .login-container {
+            position: relative;
+            z-index: 1;
         }
 
         .login-container {
