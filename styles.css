@@ -184,11 +184,16 @@ body.dark-mode .modal {
     border: 1px solid rgba(148, 163, 184, 0.2);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
+    -webkit-overflow-scrolling: touch;
 }
 
 .icon {
@@ -571,6 +576,35 @@ body {
     }
     50% {
         transform: scale(1.02);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.95);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
@@ -1039,6 +1073,43 @@ body {
     }
 }
 
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .nav-item,
+    .btn-logout,
+    .mobile-menu-toggle,
+    .theme-toggle,
+    .btn-action {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    .nav-item:active {
+        transform: scale(0.98);
+        background: rgba(99, 102, 241, 0.2);
+    }
+    
+    .btn-logout:active {
+        transform: scale(0.98) translateY(0);
+    }
+    
+    .mobile-menu-toggle:active,
+    .theme-toggle:active {
+        transform: scale(0.9);
+    }
+    
+    .stat-card:active,
+    .chart-card:active,
+    .quest-card:active {
+        transform: scale(0.98);
+    }
+    
+    button:active,
+    .btn-action:active {
+        transform: scale(0.95);
+    }
+}
+
 /* Tablet and below (768px) */
 @media (max-width: 768px) {
     .container {
@@ -1052,7 +1123,7 @@ body {
         width: 260px;
         height: 100vh;
         z-index: 1000;
-        transition: left 0.3s ease;
+        transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         overflow-y: auto;
         display: flex;
         flex-direction: column;
@@ -1061,6 +1132,18 @@ body {
     .sidebar.active {
         left: 0;
         box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
+        animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes slideInLeft {
+        from {
+            left: -100%;
+            opacity: 0.8;
+        }
+        to {
+            left: 0;
+            opacity: 1;
+        }
     }
     
     .sidebar-footer {
@@ -1083,10 +1166,32 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: transform 0.3s ease;
+    }
+    
+    .mobile-menu-toggle:active {
+        animation: pulse 0.3s ease;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
     }
     
     .header {
         padding: 15px 20px;
+        animation: slideInDown 0.5s ease-out;
+    }
+    
+    @keyframes slideInDown {
+        from {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
     }
     
     .header h1 {

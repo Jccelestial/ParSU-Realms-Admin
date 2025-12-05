@@ -1061,11 +1061,55 @@ function closeSidebar() {
 }
 
 if (mobileMenuToggle && sidebar && sidebarOverlay) {
-    // Toggle sidebar on menu button click
+    // Toggle sidebar on menu button click with haptic-like feedback
     mobileMenuToggle.addEventListener('click', (e) => {
         e.stopPropagation();
+        
+        // Add visual feedback
+        mobileMenuToggle.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+            mobileMenuToggle.style.transform = '';
+        }, 150);
+        
         toggleSidebar();
     });
+    
+    // Swipe gestures for sidebar
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+    
+    // Swipe from left edge to open
+    document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    });
+    
+    document.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const swipeDistanceX = touchEndX - touchStartX;
+        const swipeDistanceY = Math.abs(touchEndY - touchStartY);
+        
+        // Swipe right from left edge to open (and mostly horizontal)
+        if (touchStartX < 50 && swipeDistanceX > 100 && swipeDistanceY < 100) {
+            if (!sidebar.classList.contains('active')) {
+                toggleSidebar();
+            }
+        }
+        
+        // Swipe left to close
+        if (swipeDistanceX < -100 && swipeDistanceY < 100) {
+            if (sidebar.classList.contains('active')) {
+                closeSidebar();
+            }
+        }
+    }
     
     // Close sidebar when clicking overlay
     sidebarOverlay.addEventListener('click', closeSidebar);
@@ -1135,6 +1179,42 @@ function initThemeToggle() {
             localStorage.setItem('theme', 'light');
         }
     });
+}
+
+// Add touch feedback to interactive elements
+function initTouchFeedback() {
+    if (window.innerWidth <= 768) {
+        // Add ripple effect to buttons and cards
+        const interactiveElements = document.querySelectorAll('.btn-action, .nav-item, .stat-card, .chart-card, .quest-card');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('touchstart', function(e) {
+                this.style.transition = 'transform 0.1s ease';
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            element.addEventListener('touchend', function(e) {
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 100);
+            });
+            
+            element.addEventListener('touchcancel', function(e) {
+                this.style.transform = '';
+            });
+        });
+        
+        // Add bounce effect to navigation items
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                this.style.animation = 'bounceIn 0.4s ease';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 400);
+            });
+        });
+    }
 }
 
 // Parallax scroll effect for mobile cards
@@ -1208,4 +1288,5 @@ if (checkAuth()) {
     initDashboard();
     initThemeToggle();
     initParallaxScroll();
+    initTouchFeedback();
 }

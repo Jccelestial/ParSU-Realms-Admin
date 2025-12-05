@@ -195,12 +195,77 @@
             margin-top: 30px;
         }
 
+        /* Touch feedback and interactions */
+        @media (hover: none) and (pointer: coarse) {
+            .form-group input {
+                -webkit-tap-highlight-color: rgba(99, 102, 241, 0.1);
+                touch-action: manipulation;
+            }
+            
+            .login-btn {
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .login-btn:active {
+                transform: scale(0.98);
+                box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+            }
+            
+            .password-toggle {
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+            }
+            
+            .password-toggle:active {
+                transform: scale(0.9);
+            }
+            
+            .remember-me label {
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+            }
+            
+            /* Ripple effect for button */
+            .login-btn::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                transform: translate(-50%, -50%);
+                transition: width 0.6s, height 0.6s;
+            }
+            
+            .login-btn:active::after {
+                width: 300px;
+                height: 300px;
+            }
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .login-container {
                 max-width: 90%;
                 padding: 40px 30px;
                 margin: 20px;
+                animation: slideInMobile 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            @keyframes slideInMobile {
+                from {
+                    opacity: 0;
+                    transform: translateY(-50px) scale(0.95);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
             }
 
             .logo-container h1 {
@@ -215,6 +280,16 @@
                 max-width: 90px;
                 width: 100%;
                 height: auto;
+                animation: logoFloat 3s ease-in-out infinite;
+            }
+            
+            @keyframes logoFloat {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+            }
+            
+            .form-group input:focus {
+                transform: scale(1.02);
             }
         }
 
@@ -231,10 +306,34 @@
 
             .logo-container h1 {
                 font-size: 22px;
+                animation: fadeInDown 0.8s ease-out;
+            }
+            
+            @keyframes fadeInDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
             }
 
             .logo-container p {
                 font-size: 12px;
+                animation: fadeInUp 1s ease-out;
+            }
+            
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
             }
 
             .logo-container img {
@@ -250,11 +349,17 @@
             .form-group input {
                 font-size: 14px;
                 padding: 12px 14px;
+                transition: all 0.3s ease;
+            }
+            
+            .form-group input:focus {
+                box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2), 0 4px 12px rgba(0, 0, 0, 0.1);
             }
 
             .login-btn {
                 padding: 14px;
                 font-size: 15px;
+                transition: all 0.2s ease;
             }
 
             .remember-me label {
@@ -263,6 +368,12 @@
 
             .footer-text {
                 font-size: 12px;
+                animation: fadeIn 1.5s ease-out;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
             }
         }
 
