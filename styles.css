@@ -1059,7 +1059,7 @@ body {
         margin-top: auto;
         position: sticky;
         bottom: 0;
-        background: inherit;
+        background: transparent;
         padding: 20px;
         padding-top: 20px;
     }
@@ -1354,7 +1354,7 @@ body {
     .sidebar-footer {
         position: sticky;
         bottom: 0;
-        background: inherit;
+        background: transparent;
     }
 }
 
