@@ -260,7 +260,8 @@ async function loadDashboard() {
                                 font: { size: window.innerWidth <= 480 ? 9 : 10 },
                                 boxWidth: window.innerWidth <= 480 ? 10 : 12,
                                 usePointStyle: true,
-                                pointStyle: 'circle'
+                                pointStyle: 'circle',
+                                color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#666'
                             },
                             onHover: (event) => {
                                 event.native.target.style.cursor = 'pointer';
@@ -403,12 +404,13 @@ async function loadDashboard() {
                                 precision: 0,
                                 font: {
                                     size: window.innerWidth <= 480 ? 9 : 11
-                                }
+                                },
+                                color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#666'
                             },
                             grid: {
                                 display: true,
                                 drawBorder: false,
-                                color: 'rgba(0, 0, 0, 0.05)'
+                                color: document.body.classList.contains('dark-mode') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'
                             }
                         },
                         x: {
@@ -417,7 +419,8 @@ async function loadDashboard() {
                                     size: window.innerWidth <= 480 ? 9 : 11
                                 },
                                 maxRotation: window.innerWidth <= 480 ? 45 : 0,
-                                minRotation: window.innerWidth <= 480 ? 45 : 0
+                                minRotation: window.innerWidth <= 480 ? 45 : 0,
+                                color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#666'
                             },
                             grid: {
                                 display: false
@@ -775,17 +778,19 @@ async function loadAnalytics() {
                             beginAtZero: true,
                             ticks: {
                                 stepSize: 1,
-                                font: { size: window.innerWidth <= 480 ? 9 : 11 }
+                                font: { size: window.innerWidth <= 480 ? 9 : 11 },
+                                color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#666'
                             },
                             grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
+                                color: document.body.classList.contains('dark-mode') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'
                             }
                         },
                         x: {
                             ticks: {
                                 font: { size: window.innerWidth <= 480 ? 8 : 10 },
                                 maxRotation: window.innerWidth <= 480 ? 45 : 0,
-                                minRotation: window.innerWidth <= 480 ? 45 : 0
+                                minRotation: window.innerWidth <= 480 ? 45 : 0,
+                                color: document.body.classList.contains('dark-mode') ? '#ffffff' : '#666'
                             },
                             grid: {
                                 display: false
@@ -1146,6 +1151,44 @@ if (mobileMenuToggle && sidebar && sidebarOverlay) {
     });
 }
 
+// Update chart colors based on theme
+function updateChartColors() {
+    const isDark = document.body.classList.contains('dark-mode');
+    const textColor = isDark ? '#ffffff' : '#666666';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
+    
+    // Update all chart instances
+    Object.keys(chartInstances).forEach(chartKey => {
+        const chart = chartInstances[chartKey];
+        if (chart && chart.options) {
+            // Update scales colors
+            if (chart.options.scales) {
+                if (chart.options.scales.y) {
+                    if (chart.options.scales.y.ticks) {
+                        chart.options.scales.y.ticks.color = textColor;
+                    }
+                    if (chart.options.scales.y.grid) {
+                        chart.options.scales.y.grid.color = gridColor;
+                    }
+                }
+                if (chart.options.scales.x) {
+                    if (chart.options.scales.x.ticks) {
+                        chart.options.scales.x.ticks.color = textColor;
+                    }
+                }
+            }
+            
+            // Update legend colors
+            if (chart.options.plugins && chart.options.plugins.legend && chart.options.plugins.legend.labels) {
+                chart.options.plugins.legend.labels.color = textColor;
+            }
+            
+            // Update the chart
+            chart.update('none'); // 'none' mode for instant update without animation
+        }
+    });
+}
+
 // Theme Toggle Functionality
 function initThemeToggle() {
     const themeToggle = document.getElementById('theme-toggle');
@@ -1178,6 +1221,9 @@ function initThemeToggle() {
             moonIcon.style.display = 'none';
             localStorage.setItem('theme', 'light');
         }
+        
+        // Update chart colors
+        updateChartColors();
     });
 }
 
