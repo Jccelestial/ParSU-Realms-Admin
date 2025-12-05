@@ -1046,11 +1046,22 @@ body {
         z-index: 1000;
         transition: left 0.3s ease;
         overflow-y: auto;
+        display: flex;
+        flex-direction: column;
     }
     
     .sidebar.active {
         left: 0;
         box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .sidebar-footer {
+        margin-top: auto;
+        position: sticky;
+        bottom: 0;
+        background: inherit;
+        padding: 20px;
+        padding-top: 20px;
     }
     
     .mobile-menu-toggle {
@@ -1318,6 +1329,8 @@ body {
     
     .sidebar {
         width: 240px;
+        display: flex;
+        flex-direction: column;
     }
     
     .logo h2 {
@@ -1336,6 +1349,12 @@ body {
     .btn-logout {
         font-size: 13px;
         padding: 10px;
+    }
+    
+    .sidebar-footer {
+        position: sticky;
+        bottom: 0;
+        background: inherit;
     }
 }
 
