@@ -1232,6 +1232,18 @@ body {
         gap: 8px;
     }
     
+    .quest-card {
+        text-align: center;
+    }
+    
+    .quest-card h3 {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    
     .quest-card h3 img {
         width: 150px !important;
         height: 90px !important;
@@ -1239,8 +1251,12 @@ body {
     
     .quest-stats-row {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         gap: 4px;
+    }
+    
+    .quest-percentage {
+        text-align: center;
     }
     
     .quest-count {
@@ -1387,9 +1403,29 @@ body {
         max-height: 180px;
     }
     
+    .quest-card {
+        text-align: center;
+    }
+    
+    .quest-card h3 {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    
     .quest-card h3 img {
         width: 120px !important;
         height: 72px !important;
+    }
+    
+    .quest-stats-row {
+        align-items: center;
+    }
+    
+    .quest-percentage {
+        text-align: center;
     }
     
     table {
