@@ -271,6 +271,9 @@ body {
 
 .nav {
     flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 10px;
 }
 
 .nav-item {
@@ -311,6 +314,7 @@ body {
     margin-top: auto;
     padding-top: 20px;
     border-top: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
 }
 
 .btn-logout {
@@ -1062,6 +1066,13 @@ body {
         background: transparent;
         padding: 20px;
         padding-top: 20px;
+        flex-shrink: 0;
+    }
+    
+    .nav {
+        overflow-y: auto;
+        flex: 1;
+        margin-bottom: 10px;
     }
     
     .mobile-menu-toggle {
@@ -1493,20 +1504,24 @@ body {
     }
 }
 
-/* Hide scrollbar but keep functionality */
+/* Scrollbar styling for navigation */
+.nav::-webkit-scrollbar,
 .sidebar::-webkit-scrollbar {
     width: 6px;
 }
 
+.nav::-webkit-scrollbar-track,
 .sidebar::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
 }
 
+.nav::-webkit-scrollbar-thumb,
 .sidebar::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 3px;
 }
 
+.nav::-webkit-scrollbar-thumb:hover,
 .sidebar::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
 }
