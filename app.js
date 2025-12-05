@@ -256,9 +256,9 @@ async function loadDashboard() {
                             display: hasData,
                             position: 'bottom',
                             labels: {
-                                padding: 8,
-                                font: { size: 10 },
-                                boxWidth: 12,
+                                padding: window.innerWidth <= 480 ? 6 : 8,
+                                font: { size: window.innerWidth <= 480 ? 9 : 10 },
+                                boxWidth: window.innerWidth <= 480 ? 10 : 12,
                                 usePointStyle: true,
                                 pointStyle: 'circle'
                             },
@@ -279,16 +279,16 @@ async function loadDashboard() {
                         tooltip: { 
                             enabled: hasData,
                             backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                            padding: 12,
+                            padding: window.innerWidth <= 480 ? 10 : 12,
                             titleColor: '#fff',
                             bodyColor: '#fff',
                             cornerRadius: 8,
                             titleFont: {
-                                size: 13,
+                                size: window.innerWidth <= 480 ? 11 : 13,
                                 weight: 'bold'
                             },
                             bodyFont: {
-                                size: 12
+                                size: window.innerWidth <= 480 ? 10 : 12
                             },
                             callbacks: {
                                 label: function(context) {
@@ -402,7 +402,7 @@ async function loadDashboard() {
                                 stepSize: 1,
                                 precision: 0,
                                 font: {
-                                    size: 11
+                                    size: window.innerWidth <= 480 ? 9 : 11
                                 }
                             },
                             grid: {
@@ -414,8 +414,10 @@ async function loadDashboard() {
                         x: {
                             ticks: {
                                 font: {
-                                    size: 11
-                                }
+                                    size: window.innerWidth <= 480 ? 9 : 11
+                                },
+                                maxRotation: window.innerWidth <= 480 ? 45 : 0,
+                                minRotation: window.innerWidth <= 480 ? 45 : 0
                             },
                             grid: {
                                 display: false
@@ -428,20 +430,20 @@ async function loadDashboard() {
                         },
                         tooltip: {
                             backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                            padding: 12,
+                            padding: window.innerWidth <= 480 ? 10 : 12,
                             titleColor: '#fff',
                             bodyColor: '#fff',
                             cornerRadius: 8,
                             titleFont: {
-                                size: 13,
+                                size: window.innerWidth <= 480 ? 11 : 13,
                                 weight: 'bold'
                             },
                             bodyFont: {
-                                size: 12
+                                size: window.innerWidth <= 480 ? 10 : 12
                             },
                             displayColors: true,
-                            boxWidth: 10,
-                            boxHeight: 10,
+                            boxWidth: window.innerWidth <= 480 ? 8 : 10,
+                            boxHeight: window.innerWidth <= 480 ? 8 : 10,
                             usePointStyle: true,
                             callbacks: {
                                 title: function(context) {
@@ -736,20 +738,20 @@ async function loadAnalytics() {
                         },
                         tooltip: {
                             backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                            padding: 12,
+                            padding: window.innerWidth <= 480 ? 10 : 12,
                             titleColor: '#fff',
                             bodyColor: '#fff',
                             cornerRadius: 8,
                             titleFont: {
-                                size: 13,
+                                size: window.innerWidth <= 480 ? 11 : 13,
                                 weight: 'bold'
                             },
                             bodyFont: {
-                                size: 12
+                                size: window.innerWidth <= 480 ? 10 : 12
                             },
                             displayColors: true,
-                            boxWidth: 10,
-                            boxHeight: 10,
+                            boxWidth: window.innerWidth <= 480 ? 8 : 10,
+                            boxHeight: window.innerWidth <= 480 ? 8 : 10,
                             callbacks: {
                                 title: function(context) {
                                     return `Time Range: ${context[0].label}`;
@@ -773,7 +775,7 @@ async function loadAnalytics() {
                             beginAtZero: true,
                             ticks: {
                                 stepSize: 1,
-                                font: { size: 11 }
+                                font: { size: window.innerWidth <= 480 ? 9 : 11 }
                             },
                             grid: {
                                 color: 'rgba(0, 0, 0, 0.05)'
@@ -781,7 +783,9 @@ async function loadAnalytics() {
                         },
                         x: {
                             ticks: {
-                                font: { size: 10 }
+                                font: { size: window.innerWidth <= 480 ? 8 : 10 },
+                                maxRotation: window.innerWidth <= 480 ? 45 : 0,
+                                minRotation: window.innerWidth <= 480 ? 45 : 0
                             },
                             grid: {
                                 display: false
@@ -1075,11 +1079,26 @@ if (mobileMenuToggle && sidebar && sidebarOverlay) {
         });
     });
     
-    // Close sidebar on window resize if screen becomes larger
+    // Handle window resize
+    let resizeTimer;
     window.addEventListener('resize', () => {
+        // Close sidebar on window resize if screen becomes larger
         if (window.innerWidth > 768) {
             closeSidebar();
         }
+        
+        // Debounce chart re-rendering on resize
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            const activePage = document.querySelector('.page.active');
+            if (activePage) {
+                const pageId = activePage.id.replace('-page', '');
+                // Reload current page to update charts with new responsive settings
+                if (pageId === 'dashboard' || pageId === 'analytics') {
+                    loadPageData(pageId);
+                }
+            }
+        }, 300);
     });
 }
 

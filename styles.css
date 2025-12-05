@@ -479,7 +479,7 @@ body {
 /* Charts */
 .charts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
 }
 
@@ -494,6 +494,7 @@ body {
     animation: fadeInUp 0.8s ease-out;
     opacity: 0;
     animation-fill-mode: forwards;
+    overflow: hidden;
 }
 
 .chart-card:nth-child(1) {
@@ -527,14 +528,22 @@ body {
 .chart-card canvas {
     opacity: 1 !important;
     pointer-events: auto !important;
+    max-width: 100%;
+    height: auto !important;
 }
 
 .chart-card > div {
     pointer-events: none;
+    position: relative;
+    height: 280px;
+    width: 100%;
 }
 
 .chart-card > div > canvas {
     pointer-events: auto;
+    max-width: 100%;
+    height: 100% !important;
+    width: 100% !important;
 }
 
 /* Table */
@@ -865,10 +874,10 @@ body {
 .mobile-menu-toggle {
     display: none;
     position: fixed;
-    top: 20px;
+    top: 10px;
     left: 20px;
     z-index: 1001;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: linear-gradient(180deg, #103064 0%, #0f172a 100%);
     color: white;
     border: none;
     padding: 12px;
@@ -983,6 +992,19 @@ body {
         gap: 15px;
     }
     
+    .chart-card {
+        max-height: none;
+        min-height: 300px;
+    }
+    
+    .chart-card > div {
+        height: 250px;
+    }
+    
+    .chart-card canvas {
+        height: 250px !important;
+    }
+    
     .analytics-grid {
         grid-template-columns: 1fr;
     }
@@ -1063,11 +1085,22 @@ body {
     
     .chart-card {
         padding: 16px;
+        max-height: none;
+        min-height: 280px;
     }
     
     .chart-card h3 {
-        font-size: 15px;
-        margin-bottom: 12px;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    
+    .chart-card > div {
+        height: 220px;
+    }
+    
+    .chart-card canvas {
+        height: 220px !important;
+        max-height: 220px;
     }
     
     .quest-card {
@@ -1157,6 +1190,15 @@ body {
         font-size: 10px;
     }
     
+    .chart-card > div {
+        height: 200px;
+    }
+    
+    .chart-card canvas {
+        height: 200px !important;
+        max-height: 200px;
+    }
+    
     .mobile-menu-toggle {
         top: 15px;
         left: 15px;
@@ -1199,6 +1241,25 @@ body {
     
     .stat-card .value {
         font-size: 18px;
+    }
+    
+    .chart-card {
+        padding: 12px;
+        min-height: 240px;
+    }
+    
+    .chart-card h3 {
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+    
+    .chart-card > div {
+        height: 180px;
+    }
+    
+    .chart-card canvas {
+        height: 180px !important;
+        max-height: 180px;
     }
     
     .quest-card h3 img {
