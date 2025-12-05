@@ -1102,7 +1102,43 @@ if (mobileMenuToggle && sidebar && sidebarOverlay) {
     });
 }
 
+// Theme Toggle Functionality
+function initThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const sunIcon = themeToggle.querySelector('.sun-icon');
+    const moonIcon = themeToggle.querySelector('.moon-icon');
+    
+    // Check for saved theme preference or default to light mode
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    
+    // Apply the theme on load
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+    }
+    
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        
+        const isDark = document.body.classList.contains('dark-mode');
+        
+        // Toggle icons
+        if (isDark) {
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+            localStorage.setItem('theme', 'light');
+        }
+    });
+}
+
 // Initial authentication check
 if (checkAuth()) {
     initDashboard();
+    initThemeToggle();
 }
