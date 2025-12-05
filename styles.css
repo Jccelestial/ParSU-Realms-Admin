@@ -1255,6 +1255,12 @@ body {
         gap: 4px;
     }
     
+    .progress-bar {
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
     .quest-percentage {
         text-align: center;
     }
@@ -1422,6 +1428,12 @@ body {
     
     .quest-stats-row {
         align-items: center;
+    }
+    
+    .progress-bar {
+        max-width: 70%;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .quest-percentage {

@@ -1137,6 +1137,18 @@ function initThemeToggle() {
     });
 }
 
+// Auto logout when window/tab is closed
+window.addEventListener('beforeunload', () => {
+    // Clear session data on exit
+    try {
+        localStorage.removeItem('adminLoggedIn');
+        localStorage.removeItem('adminLoginTime');
+        localStorage.removeItem('adminEmail');
+    } catch (e) {
+        console.warn('Error clearing session on exit', e);
+    }
+});
+
 // Initial authentication check
 if (checkAuth()) {
     initDashboard();
